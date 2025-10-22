@@ -3,9 +3,9 @@ import { IDataClient } from './IDataClient';
 
 // localforage can be configured to use specific drivers
 localforage.config({
-  name: 'StockDiaryDB',
-  storeName: 'stock_diary_store',
-  description: 'Local database for StockDiary application',
+  name: 'VistarDB',
+  storeName: 'vistar_store',
+  description: 'Local database for Vistar application',
 });
 
 export class LocalDataClient implements IDataClient {
@@ -14,14 +14,11 @@ export class LocalDataClient implements IDataClient {
   }
 
   async createTableIfMissing(table: string): Promise<void> {
-    // With localforage using a single key-value store, table creation is implicit.
-    // We just ensure there's an entry for the table.
     const tableKey = this.getTableKey(table);
     const existing = await localforage.getItem<Record<string, unknown>>(tableKey);
     if (existing === null) {
       await localforage.setItem(tableKey, {});
     }
-    console.log(`[LocalDataClient] Table "${table}" ensured.`);
   }
 
   async list<T>(table: string): Promise<T[]> {
@@ -44,7 +41,6 @@ export class LocalDataClient implements IDataClient {
     const data = (await localforage.getItem<Record<string, T>>(tableKey)) || {};
     data[payload.id] = payload;
     await localforage.setItem(tableKey, data);
-    console.log(`[LocalDataClient] Upserted item ${payload.id} in table "${table}"`);
     return payload;
   }
 
@@ -55,13 +51,11 @@ export class LocalDataClient implements IDataClient {
     if (data && data[id]) {
       delete data[id];
       await localforage.setItem(tableKey, data);
-      console.log(`[LocalDataClient] Deleted item ${id} from table "${table}"`);
     }
   }
 
   async clear(table: string): Promise<void> {
     const tableKey = this.getTableKey(table);
     await localforage.setItem(tableKey, {});
-    console.log(`[LocalDataClient] Cleared table "${table}"`);
   }
 }

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useStock } from '../contexts/StockContext';
@@ -24,20 +23,19 @@ const Watchlist = () => {
                 </div>
             ) : (
                 <div className="border rounded-lg">
-                    <div className="grid grid-cols-3 font-semibold p-4 border-b bg-muted/50">
+                    {/* FIX: Removed 'Tags' column and adjusted grid to 2 columns. */}
+                    <div className="grid grid-cols-2 font-semibold p-4 border-b bg-muted/50">
                         <div>Symbol</div>
                         <div>Company Name</div>
-                        <div>Tags</div>
                     </div>
                     {stocks.map(stock => (
-                        <Link to={`/stock/${stock.symbol}`} key={stock.id} className="grid grid-cols-3 p-4 border-b hover:bg-muted/50 transition-colors">
-                            <div className="font-mono text-primary">{stock.symbol}</div>
-                            <div>{stock.companyName}</div>
-                            <div className="flex gap-2">
-                                {stock.tags?.map(tag => (
-                                    <span key={tag} className="text-xs bg-secondary text-secondary-foreground px-2 py-1 rounded-full">{tag}</span>
-                                ))}
-                            </div>
+                        // FIX: Updated link to correct route and property 'ticker'. Adjusted grid to 2 columns.
+                        <Link to={`/company/${stock.ticker}`} key={stock.id} className="grid grid-cols-2 p-4 border-b hover:bg-muted/50 transition-colors">
+                            {/* FIX: Changed 'symbol' to 'ticker'. */}
+                            <div className="font-mono text-primary">{stock.ticker}</div>
+                            {/* FIX: Changed 'companyName' to 'name'. */}
+                            <div>{stock.name}</div>
+                            {/* FIX: Removed non-existent 'tags' property. */}
                         </Link>
                     ))}
                 </div>

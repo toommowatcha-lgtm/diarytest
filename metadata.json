@@ -1,5 +1,5 @@
 {
-  "name": "StockDiary12",
-  "description": "A comprehensive investor notebook and stock research tool to track your watchlist, analyze businesses, financials, valuation, and more. All data is saved locally in your browser.",
+  "name": "Vistar",
+  "description": "A modern financial analysis web app to display and analyze stock and company financial information with a clean, professional investor-style dashboard.",
   "requestFramePermissions": []
 }

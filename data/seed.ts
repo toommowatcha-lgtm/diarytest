@@ -1,110 +1,43 @@
-import { Stock, MoatPowerRating, StoryTone, RiskRating } from '../types';
+import { Stock } from '../types';
 
 export const seedStocks: Stock[] = [
   {
-    id: 'MSFT',
-    symbol: 'MSFT',
-    companyName: 'Microsoft Corp',
-    tags: ['Tech', 'Cloud', 'Software'],
-    businessOverview: {
-      businessModel: 'Diversified software, hardware, and cloud services company. Sells licenses for software (Windows, Office), subscriptions (Azure, Office 365), hardware (Xbox, Surface), and advertising (LinkedIn, Bing).',
-      customerSegments: [
-        { segment: 'Enterprises', description: 'Cloud services (Azure), productivity suites (Office 365), business applications (Dynamics 365).' },
-        { segment: 'Consumers', description: 'Windows OS, Surface devices, Xbox gaming, Office software.' },
-        { segment: 'Developers', description: 'Azure cloud platform, GitHub, Visual Studio.' },
-      ],
-      revenueBreakdown: [
-        { segment: 'Server products and cloud services', percentage: 40 },
-        { segment: 'Office products and cloud services', percentage: 25 },
-        { segment: 'Windows', percentage: 10 },
-        { segment: 'Gaming', percentage: 10 },
-        { segment: 'LinkedIn', percentage: 5 },
-        { segment: 'Other', percentage: 10 },
-      ],
-      channels: 'Direct sales force for enterprise, online store, retail partners, OEMs.',
-      growthEngine: 'Azure cloud adoption continues to be the primary growth driver. Expansion of AI services (OpenAI partnership) is expected to accelerate this growth. Gaming division is another key area with the acquisition of Activision Blizzard.',
-      tam: 500000000000,
-      sam: 300000000000,
-      som: 150000000000,
-      tippingPoint: 'The shift to cloud is largely complete, the next tipping point is the widespread adoption of AI-powered copilots across the entire software stack.',
-      moat: {
-        counterPositioning: { rating: MoatPowerRating.Low, reason: '' },
-        networkEffects: { rating: MoatPowerRating.High, reason: 'Windows, Office, and Azure have massive ecosystems and user bases.' },
-        switchingCosts: { rating: MoatPowerRating.High, reason: 'Deeply integrated into enterprise IT infrastructure. Migrating from Azure or Office 365 is complex and costly.' },
-        branding: { rating: MoatPowerRating.High, reason: 'One of the most recognized and trusted tech brands globally.' },
-        scaleEconomies: { rating: MoatPowerRating.High, reason: 'Massive global data center infrastructure for Azure provides significant cost advantages.' },
-        processPower: { rating: MoatPowerRating.Moderate, reason: 'Efficient software development and deployment pipeline.' },
-        corneredResource: { rating: MoatPowerRating.Moderate, reason: 'Exclusive partnership with OpenAI for certain models.' },
-      },
+    id: 'AAPL',
+    ticker: 'AAPL',
+    name: 'Apple Inc.',
+    logoUrl: 'https://companieslogo.com/img/orig/AAPL.D-f6a32b27.png?t=1633333396',
+    business_model: 'Primarily designs, manufactures, and markets consumer electronics, software, and online services. Revenue is generated from the sale of hardware (iPhone, Mac, iPad, Wearables), software and services (App Store commissions, iCloud, Apple Music), and licensing.',
+    revenue_segment: 'iPhone (~52%), Services (~20%), Wearables, Home and Accessories (~10%), Mac (~10%), iPad (~8%). Segments are geographically diversified across Americas, Europe, Greater China, Japan, and Rest of Asia Pacific.',
+    growth_engine: 'Growth is driven by new iPhone cycles, expanding the install base for high-margin Services, growth in emerging markets, and entering new product categories (e.g., Vision Pro, potential automotive ventures). The ecosystem effect (sticky customers) is a key pillar of sustainable growth.',
+    moat: 'Brand, Switching Costs, Network Effects. The Apple brand is one of the most valuable in the world, commanding premium pricing. The seamless integration of hardware and software (iOS, macOS) creates high switching costs for users invested in the ecosystem. The App Store is a powerful two-sided network effect, attracting both developers and users.',
+    market_cap: 2610000000000,
+    revenue: 383290, // TTM in millions
+    eps: 6.13, // TTM
+    pe_ratio: 27.5, // TTM
+    notes: 'Investment Thesis:\n1. Fortress balance sheet and massive cash flow generation allow for significant R&D spending and shareholder returns (buybacks & dividends).\n2. Services segment provides a recurring, high-margin revenue stream that is growing faster than hardware.\n3. Brand loyalty and ecosystem create a durable competitive advantage.\n\nRisks:\n- Regulatory scrutiny regarding App Store policies.\n- Geopolitical tensions, particularly dependence on China for manufacturing and sales.\n- Key-person risk associated with Tim Cook and the executive team.',
+    // Fix: Add seed data for valuation and financials to match the updated Stock type.
+    valuation: {
+      currentPrice: 170.00
     },
     financials: {
-      metrics: [
-        {
-          id: 'revenue',
-          name: 'Revenue',
-          isCustom: false,
-          data: [
-            { period: 'Q1 2023', value: 52.9 },
-            { period: 'Q2 2023', value: 56.2 },
-            { period: 'Q3 2023', value: 52.7 },
-            { period: 'Q4 2023', value: 56.2 },
-          ],
-        },
-        {
-            id: 'net_income',
-            name: 'Net Income',
-            isCustom: false,
-            data: [
-              { period: 'Q1 2023', value: 18.3 },
-              { period: 'Q2 2023', value: 21.9 },
-              { period: 'Q3 2023', value: 20.1 },
-              { period: 'Q4 2023', value: 20.1 },
-            ],
-          },
-        {
-          id: 'custom_azure_growth',
-          name: 'Azure Growth (%)',
-          isCustom: true,
-          data: [
-            { period: 'Q1 2023', value: 27 },
-            { period: 'Q2 2023', value: 31 },
-            { period: 'Q3 2023', value: 26 },
-            { period: 'Q4 2023', value: 27 },
-          ],
-        },
-      ],
-    },
-    valuation: {
-        currentPrice: 420,
-        investmentHorizon: 5,
-        currentSales: 211900000000, // TTM Sales
-        salesCagr: 12,
-        netProfitMargin: 35,
-        sharesOutstanding: 7430000000,
-        peTarget: 30,
-        shareChange: -1,
-    },
-    story: [
-      {
-        id: 'q4-2023-note',
-        period: 'Q4 2023',
-        summary: 'Azure growth steady, AI showing early promise.',
-        tone: StoryTone.Bullish,
-        notes: 'Management highlighted strong demand for AI services on the Azure platform. The OpenAI partnership is starting to contribute meaningfully to revenue. Gaming segment performance was solid post-Activision deal closure. Overall, the company is executing well on its key strategic pillars.',
+      annual: {
+        incomeStatement: [
+          { period: '2023', revenue: 383290, netIncome: 97000, eps: 6.13 },
+          { period: '2022', revenue: 394328, netIncome: 99803, eps: 6.11 },
+          { period: '2021', revenue: 365817, netIncome: 94680, eps: 5.61 },
+        ],
+        balanceSheet: [
+          { period: '2023', totalEquity: 62146 },
+        ],
+        cashFlow: [
+          { period: '2023', operatingCashFlow: 110543 },
+        ],
       },
-    ],
-    riskAssessment: {
-        keyBusinessRisks: 'Antitrust regulation in the US and EU. Intense competition in cloud (AWS, Google) and gaming (Sony). Potential for a slowdown in IT spending.',
-        financialRisks: 'Foreign exchange headwinds. Large goodwill on the balance sheet from acquisitions.',
-        managementRisks: 'Key person risk with Satya Nadella. Integration risk from large acquisitions like Activision.',
-        macroRisks: 'Global economic slowdown impacting enterprise and consumer spending.',
-        overallRating: RiskRating.Low,
+      quarterly: {
+        incomeStatement: [],
+        balanceSheet: [],
+        cashFlow: [],
+      }
     }
-  },
-  {
-    id: 'AAPL',
-    symbol: 'AAPL',
-    companyName: 'Apple Inc.',
-    tags: ['Tech', 'Consumer Electronics', 'Hardware'],
   }
 ];

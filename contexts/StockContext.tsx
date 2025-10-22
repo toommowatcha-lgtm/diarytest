@@ -1,34 +1,51 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { Stock } from '../types';
 import { IDataClient } from '../lib/data/IDataClient';
 import { LocalDataClient } from '../lib/data/LocalDataClient';
+import { seedStocks } from '../data/seed';
 
 interface StockContextState {
   stocks: Stock[];
   loading: boolean;
-  getStock: (symbol: string) => Promise<Stock | null>;
-  addStock: (stock: Omit<Stock, 'id'>) => Promise<Stock>;
+  getStock: (ticker: string) => Promise<Stock | null>;
+  createStock: (stock: Omit<Stock, 'id'>) => Promise<Stock>;
   updateStock: (stock: Stock) => Promise<Stock>;
-  deleteStock: (symbol: string) => Promise<void>;
+  deleteStock: (ticker: string) => Promise<void>;
+  // Fix: Add seedData and clearData to the context state type to fix error in Admin.tsx
   seedData: () => Promise<void>;
   clearData: () => Promise<void>;
 }
 
 const StockContext = createContext<StockContextState | undefined>(undefined);
 
-// Use LocalDataClient by default. This can be swapped with SupabaseDataClient later.
 const dataClient: IDataClient = new LocalDataClient();
+const TABLE_NAME = 'stocks';
 
-export const StockProvider = ({ children }: { children: ReactNode }) => {
+const bootstrapData = async () => {
+    await dataClient.createTableIfMissing(TABLE_NAME);
+    const existingStocks = await dataClient.list<Stock>(TABLE_NAME);
+    if (existingStocks.length === 0) {
+        console.log('No stocks found, seeding initial data...');
+        for (const stock of seedStocks) {
+            await dataClient.upsert(TABLE_NAME, stock);
+        }
+    }
+};
+
+// FIX: Define props for StockProvider using an interface for better readability and to resolve type errors in App.tsx.
+interface StockProviderProps {
+  children: ReactNode;
+}
+
+export const StockProvider = ({ children }: StockProviderProps) => {
   const [stocks, setStocks] = useState<Stock[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   const fetchStocks = useCallback(async () => {
     setLoading(true);
     try {
-      await dataClient.createTableIfMissing('stocks');
-      const stockList = await dataClient.list<Stock>('stocks');
+      await bootstrapData();
+      const stockList = await dataClient.list<Stock>(TABLE_NAME);
       setStocks(stockList);
     } catch (error) {
       console.error("Failed to fetch stocks:", error);
@@ -41,51 +58,54 @@ export const StockProvider = ({ children }: { children: ReactNode }) => {
     fetchStocks();
   }, [fetchStocks]);
 
-  const getStock = async (symbol: string): Promise<Stock | null> => {
-    return await dataClient.get<Stock>('stocks', symbol);
+  const getStock = async (ticker: string): Promise<Stock | null> => {
+    return await dataClient.get<Stock>(TABLE_NAME, ticker);
   };
 
-  const addStock = async (stockData: Omit<Stock, 'id'>): Promise<Stock> => {
-    const newStock: Stock = { ...stockData, id: stockData.symbol };
-    const savedStock = await dataClient.upsert<Stock>('stocks', newStock);
-    setStocks(prev => [...prev, savedStock]);
+  const createStock = async (stockData: Omit<Stock, 'id'>): Promise<Stock> => {
+    const newStock: Stock = { ...stockData, id: stockData.ticker.toUpperCase() };
+    const savedStock = await dataClient.upsert<Stock>(TABLE_NAME, newStock);
+    await fetchStocks(); // refetch all stocks to update the list
     return savedStock;
   };
 
   const updateStock = async (stock: Stock): Promise<Stock> => {
-    const updatedStock = await dataClient.upsert<Stock>('stocks', stock);
+    const updatedStock = await dataClient.upsert<Stock>(TABLE_NAME, stock);
+    // Update local state for immediate feedback
     setStocks(prev => prev.map(s => s.id === updatedStock.id ? updatedStock : s));
     return updatedStock;
   };
 
-  const deleteStock = async (symbol: string): Promise<void> => {
-    await dataClient.delete('stocks', symbol);
-    setStocks(prev => prev.filter(s => s.id !== symbol));
-  };
+  const deleteStock = async (ticker: string): Promise<void> => {
+    await dataClient.delete(TABLE_NAME, ticker);
+    await fetchStocks(); // refetch
+  }
 
-  const seedData = async (): Promise<void> => {
-    const { seedStocks } = await import('../data/seed');
+  // Fix: Implement seedData and clearData functions.
+  const seedData = async () => {
     setLoading(true);
-    await dataClient.clear('stocks');
+    await dataClient.clear(TABLE_NAME);
     for (const stock of seedStocks) {
-        await dataClient.upsert('stocks', stock);
+        await dataClient.upsert(TABLE_NAME, stock);
     }
     await fetchStocks();
   };
 
-  const clearData = async (): Promise<void> => {
-    setLoading(true);
-    await dataClient.clear('stocks');
-    await fetchStocks();
+  const clearData = async () => {
+      setLoading(true);
+      await dataClient.clear(TABLE_NAME);
+      await fetchStocks();
   };
+
 
   const value = {
     stocks,
     loading,
     getStock,
-    addStock,
+    createStock,
     updateStock,
     deleteStock,
+    // Fix: Expose seedData and clearData on the context value.
     seedData,
     clearData,
   };

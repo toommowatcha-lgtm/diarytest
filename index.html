@@ -6,61 +6,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#09090b" />
     <link rel="manifest" href="/manifest.json" />
-    <title>StockDiary - Investor Notebook</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style type="text/tailwindcss">
-      @layer base {
-        :root {
-          --background: 0 0% 100%;
-          --foreground: 222.2 84% 4.9%;
-          --card: 0 0% 100%;
-          --card-foreground: 222.2 84% 4.9%;
-          --popover: 0 0% 100%;
-          --popover-foreground: 222.2 84% 4.9%;
-          --primary: 222.2 47.4% 11.2%;
-          --primary-foreground: 210 40% 98%;
-          --secondary: 210 40% 96.1%;
-          --secondary-foreground: 222.2 47.4% 11.2%;
-          --muted: 210 40% 96.1%;
-          --muted-foreground: 215.4 16.3% 46.9%;
-          --accent: 210 40% 96.1%;
-          --accent-foreground: 222.2 47.4% 11.2%;
-          --destructive: 0 84.2% 60.2%;
-          --destructive-foreground: 210 40% 98%;
-          --border: 214.3 31.8% 91.4%;
-          --input: 214.3 31.8% 91.4%;
-          --ring: 222.2 84% 4.9%;
-          --radius: 0.5rem;
-        }
-        .dark {
-          --background: 222.2 84% 4.9%;
-          --foreground: 210 40% 98%;
-          --card: 222.2 84% 4.9%;
-          --card-foreground: 210 40% 98%;
-          --popover: 222.2 84% 4.9%;
-          --popover-foreground: 210 40% 98%;
-          --primary: 210 40% 98%;
-          --primary-foreground: 222.2 47.4% 11.2%;
-          --secondary: 217.2 32.6% 17.5%;
-          --secondary-foreground: 210 40% 98%;
-          --muted: 217.2 32.6% 17.5%;
-          --muted-foreground: 215 20.2% 65.1%;
-          --accent: 217.2 32.6% 17.5%;
-          --accent-foreground: 210 40% 98%;
-          --destructive: 0 62.8% 30.6%;
-          --destructive-foreground: 210 40% 98%;
-          --border: 217.2 32.6% 17.5%;
-          --input: 217.2 32.6% 17.5%;
-          --ring: 212.7 26.8% 83.9%;
-        }
+    <title>Vistar - Financial Analysis Dashboard</title>
+    <style>
+      :root {
+        --background: 0 0% 100%;
+        --foreground: 222.2 84% 4.9%;
+        --card: 0 0% 100%;
+        --card-foreground: 222.2 84% 4.9%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 222.2 84% 4.9%;
+        --primary: 222.2 47.4% 11.2%;
+        --primary-foreground: 210 40% 98%;
+        --secondary: 210 40% 96.1%;
+        --secondary-foreground: 222.2 47.4% 11.2%;
+        --muted: 210 40% 96.1%;
+        --muted-foreground: 215.4 16.3% 46.9%;
+        --accent: 210 40% 96.1%;
+        --accent-foreground: 222.2 47.4% 11.2%;
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 210 40% 98%;
+        --border: 214.3 31.8% 91.4%;
+        --input: 214.3 31.8% 91.4%;
+        --ring: 222.2 84% 4.9%;
+        --radius: 0.5rem;
       }
-       @layer base {
-        * {
-          @apply border-border;
-        }
-        body {
-          @apply bg-background text-foreground;
-        }
+      .dark {
+        --background: 222.2 84% 4.9%;
+        --foreground: 210 40% 98%;
+        --card: 222.2 84% 4.9%;
+        --card-foreground: 210 40% 98%;
+        --popover: 222.2 84% 4.9%;
+        --popover-foreground: 210 40% 98%;
+        --primary: 210 40% 98%;
+        --primary-foreground: 222.2 47.4% 11.2%;
+        --secondary: 217.2 32.6% 17.5%;
+        --secondary-foreground: 210 40% 98%;
+        --muted: 217.2 32.6% 17.5%;
+        --muted-foreground: 215 20.2% 65.1%;
+        --accent: 217.2 32.6% 17.5%;
+        --accent-foreground: 210 40% 98%;
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 210 40% 98%;
+        --border: 217.2 32.6% 17.5%;
+        --input: 217.2 32.6% 17.5%;
+        --ring: 212.7 26.8% 83.9%;
+      }
+      * {
+        border-color: hsl(var(--border));
+      }
+      body {
+        background-color: hsl(var(--background));
+        color: hsl(var(--foreground));
       }
     </style>
   <script type="importmap">
@@ -75,7 +71,18 @@
     "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.0.4",
     "vite": "https://aistudiocdn.com/vite@^7.1.11",
     "localforage": "https://aistudiocdn.com/localforage@^1.10.0",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.546.0"
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.546.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^0.1.0",
+    "recharts/": "https://aistudiocdn.com/recharts@^3.3.0/",
+    "recharts": "https://aistudiocdn.com/recharts@^3.3.0",
+    "tailwind-merge": "https://aistudiocdn.com/tailwind-merge@^3.3.1",
+    "class-variance-authority": "https://aistudiocdn.com/class-variance-authority@^0.7.1",
+    "@radix-ui/react-slot": "https://aistudiocdn.com/@radix-ui/react-slot@^1.2.3",
+    "clsx": "https://aistudiocdn.com/clsx@^2.1.1",
+    "@radix-ui/react-label": "https://aistudiocdn.com/@radix-ui/react-label@^2.1.7",
+    "@radix-ui/react-tabs": "https://aistudiocdn.com/@radix-ui/react-tabs@^1.1.13",
+    "@radix-ui/react-toggle-group": "https://aistudiocdn.com/@radix-ui/react-toggle-group@^1.1.11",
+    "@radix-ui/react-dialog": "https://aistudiocdn.com/@radix-ui/react-dialog@^1.1.1"
   }
 }
 </script>
@@ -83,19 +90,5 @@
   <body class="antialiased">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
-    <script>
-      const isSandbox = window.location.origin.includes('ai.studio') || window.location.origin.includes('usercontent.goog');
-      if ('serviceWorker' in navigator && !isSandbox) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/service-worker.js').then(registration => {
-            console.log('SW registered: ', registration);
-          }).catch(registrationError => {
-            console.log('SW registration failed: ', registrationError);
-          });
-        });
-      } else if (isSandbox) {
-        console.log('Service Worker registration skipped in sandbox environment.');
-      }
-    </script>
   </body>
 </html>

@@ -1,33 +1,25 @@
-
 import React, { Suspense, lazy } from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './lib/ui/theme';
 import { StockProvider } from './contexts/StockContext';
 import TopNav from './components/TopNav';
 
-// Lazy load pages for better initial performance
-const Watchlist = lazy(() => import('./pages/Watchlist'));
-const StockDetail = lazy(() => import('./pages/StockDetail/Index'));
-const Compare = lazy(() => import('./pages/Compare'));
-const Settings = lazy(() => import('./pages/Settings'));
-const Admin = lazy(() => import('./pages/Admin'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const CompanyPage = lazy(() => import('./pages/CompanyPage'));
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="stockdiary-theme">
+    <ThemeProvider defaultTheme="dark" storageKey="vistar-theme">
       <StockProvider>
         <HashRouter>
           <div className="min-h-screen bg-background font-sans antialiased">
             <TopNav />
             <main className="container mx-auto p-4 md:p-6 lg:p-8">
-              <Suspense fallback={<div className="text-center py-10">Loading page...</div>}>
+              <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading...</div>}>
                 <Routes>
-                  <Route path="/" element={<Navigate to="/watchlist" replace />} />
-                  <Route path="/watchlist" element={<Watchlist />} />
-                  <Route path="/stock/:symbol" element={<StockDetail />} />
-                  <Route path="/compare" element={<Compare />} />
-                  <Route path="/settings" element={<Settings />} />
-                  <Route path="/admin" element={<Admin />} />
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/company/:ticker" element={<CompanyPage />} />
+                  <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
               </Suspense>
             </main>

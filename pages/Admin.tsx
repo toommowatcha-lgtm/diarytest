@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useStock } from '../contexts/StockContext';
 
