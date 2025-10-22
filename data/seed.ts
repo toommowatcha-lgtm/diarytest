@@ -1,4 +1,4 @@
-import { Stock, MoatPowerRating, StoryTone, RiskRating } from '@/types';
+import { Stock, MoatPowerRating, StoryTone, RiskRating } from '../types';
 
 export const seedStocks: Stock[] = [
   {

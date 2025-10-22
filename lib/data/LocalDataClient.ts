@@ -1,5 +1,5 @@
 import localforage from 'localforage';
-import { IDataClient } from '@/lib/data/IDataClient';
+import { IDataClient } from './IDataClient';
 
 // localforage can be configured to use specific drivers
 localforage.config({
